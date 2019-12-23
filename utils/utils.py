@@ -16,17 +16,17 @@ class Logger:
     @staticmethod
     def log(message: str):
         for line in message.split("\n"):
-            print(f'[{datetime.now()}]', line)
+            print(f'[{datetime.now()}]', line, Colors.ENDC)
 
     @staticmethod
     def warning(message: str):
         for line in message.split("\n"):
-            print(f'{Colors.WARNING}[{datetime.now()}]', line)
+            print(f'{Colors.WARNING}[{datetime.now()}]', line, Colors.ENDC)
 
     @staticmethod
     def error(message: str):
         for line in message.split("\n"):
-            print(f'{Colors.FAIL}[{datetime.now()}]', line)
+            print(f'{Colors.FAIL}[{datetime.now()}]', line, Colors.ENDC)
 
 
 class CommandError(Exception):

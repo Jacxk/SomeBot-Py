@@ -14,8 +14,7 @@ class Img(Command):
 
     async def run(self, message: discord.Message, args: []):
         msg = await message.channel.send("Generating Image...\nhttps://tenor.com/wYgV.gif")
-        url = "https://cdn.discordapp.com/avatars/266315409735548928/936978e806d13afcced9845e8f95fa58.png?size=2048"
-        res = requests.get(url)
+        res = requests.get(message.author.avatar_url)
 
         img = Image.new("RGBA", (500, 500), "lightblue")
         pfp = Image.open(BytesIO(res.content))
