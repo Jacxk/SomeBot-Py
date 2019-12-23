@@ -14,16 +14,19 @@ class Colors:
 
 class Logger:
     @staticmethod
-    def log(message):
-        print(f'[{datetime.now()}]', message)
+    def log(message: str):
+        for line in message.split("\n"):
+            print(f'[{datetime.now()}]', line)
 
     @staticmethod
-    def warning(message):
-        print(f'{Colors.WARNING}[{datetime.now()}] WARNING!', message)
+    def warning(message: str):
+        for line in message.split("\n"):
+            print(f'{Colors.WARNING}[{datetime.now()}]', line)
 
     @staticmethod
-    def error(message):
-        print(f'{Colors.FAIL}[{datetime.now()}] ERROR!', message)
+    def error(message: str):
+        for line in message.split("\n"):
+            print(f'{Colors.FAIL}[{datetime.now()}]', line)
 
 
 class CommandError(Exception):

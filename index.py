@@ -2,6 +2,7 @@ import importlib
 import json
 import os
 import re
+import traceback
 from pathlib import Path
 
 from discord import ChannelType, Embed, AutoShardedClient, Game, Status, Message, Color
@@ -29,7 +30,8 @@ async def on_ready():
         await load_commands()
         Logger.log(f"Started up as {Colors.FAIL}{client.user}{Colors.ENDC}!")
     except Exception as err:
-        Logger.error(err)
+        Logger.error(str(err))
+        Logger.error(traceback.format_exc())
         quit(1)
 
 
@@ -76,7 +78,8 @@ async def on_message(message: Message):
                     return
                 await command.run(message, args)
         except Exception as err:
-            Logger.error(f"while executing '{command.name}': {err}")
+            Logger.error(f"There was an error while executing '{command.name}': {err}")
+            Logger.error(traceback.format_exc())
             if type(err) is CommandError:
                 embed = Embed(
                     description=f"There was an error while executing this command:\n**{err}**",
