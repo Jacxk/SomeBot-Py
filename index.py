@@ -78,14 +78,10 @@ async def on_message(message: Message):
                 await message.delete()
             if command.enabled:
                 if command.dev_only and message.author.id not in config['developers']:
-                    embed = Embed(description="Executing comm... wait a minute... who are you...?")
-                    embed.set_image(url="https://tenor.com/LiHD.gif")
-                    await channel.send(embed=embed)
+                    await channel.send("Executing comm... wait a minute... who are you...?\nhttps://tenor.com/LiHD.gif")
                     return
                 if command.guild_only and channel.type == ChannelType.private or channel.type == ChannelType.group:
-                    embed = Embed(description="Where... Where am I? What is this place?")
-                    embed.set_image(url="https://tenor.com/XPbB.gif")
-                    await channel.send(embed=embed)
+                    await channel.send("Where... Where am I? What is this place?\nhttps://tenor.com/XPbB.gif")
                     return
                 await command.run(message, args)
         except Exception as err:
@@ -93,7 +89,7 @@ async def on_message(message: Message):
             Logger.error(traceback.format_exc())
             if type(err) is CommandError:
                 embed = Embed(
-                    description=f"There was an error while executing this command:\n**{err}**",
+                    description=f"**{err}**",
                     color=Color.red(),
                     title="?&^ERROR BEOP BOEP.!$#"
                 )
