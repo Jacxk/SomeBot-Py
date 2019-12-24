@@ -24,6 +24,11 @@ async def on_connect():
 
 
 @client.event
+async def on_disconnect():
+    Logger.warning(f"{Colors.FAIL}{client.user}{Colors.ENDC} disconnected from Discord!")
+
+
+@client.event
 async def on_ready():
     try:
         await load_database()
