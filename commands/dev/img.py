@@ -1,19 +1,20 @@
 import math
 from io import BytesIO
+from typing import List
 
-import discord
 import requests
 from PIL import Image, ImageFont, ImageDraw
+from discord import Client, Message, File
 
 from interfaces.Command import Command
 
 
 class Img(Command):
-    def __init__(self, client: discord.Client, config):
+    def __init__(self, client: Client, config):
         super().__init__("img", client, config)
         self.dev_only = False
 
-    async def run(self, message: discord.Message, args: []):
+    async def run(self, message: Message, args: List[str]):
         msg = await message.channel.send("Generating Image...\nhttps://tenor.com/wYgV.gif")
         pic_format = 'png'
         if message.author.is_avatar_animated():
@@ -40,5 +41,6 @@ class Img(Command):
         byte = BytesIO()
         img.save(byte, format="JPEG", quality=25)
         byte.seek(0)
+
         await msg.edit(content=f'Here is the image {message.author.mention}')
-        await message.channel.send(file=discord.File(byte, filename="i.jpg"))
+        await message.channel.send(file=File(byte, filename="i.jpg"))
