@@ -16,12 +16,28 @@ class Eval(Command):
         if len(args) < 1:
             raise CommandError("What do you want me to eval? I can't know what you're thinking...")
 
+        text = ' '.join(args).split('\n')
+        text[-1] = 'return ' + text[-1]
+        text = '\n  '.join(text)
+
+        fun = {
+            'message': message,
+            'Embed': Embed
+        }
+        _in = f"async def func():\n  {text}"
+
+        try:
+            exec(_in, fun)
+            out = await fun['func']()
+        except Exception as err:
+            out = str(err)
+
         embed = Embed(
             title="Here you go chief.",
-            description=f"Input:\n```py\n"
-                        f"{' '.join(args)}```\n\n"
-                        f"Output:\n```\n"
-                        f"{eval(' '.join(args))}```"
+            description="Input:\n```py\n"
+                        f"{_in}```\n\n"
+                        "Output:\n```\n"
+                        f"{out}```"
         )
 
         await message.channel.send(embed=embed)
