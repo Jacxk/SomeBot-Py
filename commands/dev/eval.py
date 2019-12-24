@@ -17,7 +17,7 @@ class Eval(Command):
             raise CommandError("What do you want me to eval? I can't know what you're thinking...")
 
         text = ' '.join(args).split('\n')
-        text[-1] = 'return ' + text[-1]
+        text[-1] = ('return ' + text[-1]) if not text[-1].startswith("return") else text[-1]
         text = '\n  '.join(text)
 
         fun = {
