@@ -5,6 +5,7 @@ import re
 import traceback
 from pathlib import Path
 
+import atexit
 from discord import ChannelType, Embed, AutoShardedClient, Game, Status, Message, Color
 
 from utils.utils import *
@@ -44,6 +45,11 @@ async def on_ready():
 async def on_error(event):
     Logger.error(f"There was an error on {Colors.WARNING}{event}{Colors.ENDC} with the API")
     quit(1)
+
+
+@atexit.register
+def stop():
+    Logger.warning("Shutting down bot...")
 
 
 @client.event
