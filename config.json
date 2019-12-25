@@ -2,5 +2,24 @@
   "prefix": "!",
   "developers": [
     266315409735548928
+  ],
+  "ping-res": [
+    "What do you want {user}?",
+    "How there you summoning me...\nhttps://tenor.com/bbEm5.gif",
+    "{user}",
+    "{user}{user}{user}{user}{user} you like pings right?",
+    "Leave me alone pls"
+  ],
+  "ai-res": [
+    ["@everyone", "HAH! You tried..."],
+    ["(give|gimme|send|gime|can.*have).*(meme).*", "run meme"],
+    ["say (.*)", "{0}"],
+    ["can (help me|help)", "run help"],
+    ["(u|you).*?(bad|suk|suck|suc)", "no u bad :cry:"]
+  ],
+  "ai-res-not": [
+    "I don't know how to do that",
+    "I have no idea what you're saying",
+    "Eh... what...?"
   ]
 }

@@ -1,13 +1,15 @@
+import atexit
 import importlib
 import json
 import os
 import re
 import traceback
 from pathlib import Path
+from random import randint
 
-import atexit
 from discord import ChannelType, Embed, AutoShardedClient, Game, Status, Message, Color
 
+from utils import AI
 from utils.utils import *
 
 config = None
@@ -58,15 +60,23 @@ async def on_message(message: Message):
         return
 
     channel = message.channel
+    cmd, *args = message.content[len(config['prefix']):].split(" ")
 
     if 406944549647286272 in list(map(lambda u: u.id, message.mentions)):
-        await channel.send(f'What do you want {message.author.mention}?')
+        res = await AI.match(message.content, config, commands, message)
+        if not res:
+            if args and len(args) > 0:
+                await channel.send(config['ai-res-not'][randint(0, len(config['ai-res-not']) - 1)])
+            else:
+                await channel.send(
+                    config['ping-res'][randint(0, len(config['ping-res']) - 1)].replace(
+                        '{user}', message.author.mention
+                    )
+                )
         return
 
     if not message.content.startswith(config['prefix']):
         return
-
-    cmd, *args = message.content[len(config['prefix']):].split(" ")
 
     if cmd in commands:
         command = commands.get(cmd)

@@ -17,7 +17,7 @@ class Meme(Command):
     async def run(self, message: Message, args: List[str]):
         msg = await message.channel.send("Constructing meme with Baby Yoda's help...")
 
-        if len(args) > 0:
+        if args and len(args) > 0:
             self.path = args[0]
 
         try:
