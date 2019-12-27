@@ -12,7 +12,7 @@ class Meme(Command):
     def __init__(self, client: Client, config):
         super().__init__("meme", client, config)
         self.url = "https://meme-api.herokuapp.com/gimme/"
-        self.path = "PewdiepieSubmissions"
+        self.path = config['meme-source']
 
     async def run(self, message: Message, args: List[str]):
         msg = await message.channel.send("Constructing meme with Baby Yoda's help...")
