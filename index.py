@@ -62,7 +62,7 @@ async def on_message(message: Message):
     channel = message.channel
     cmd, *args = message.content[len(config['prefix']):].split(" ")
 
-    if 406944549647286272 in list(map(lambda u: u.id, message.mentions)):
+    if client.user.id in list(map(lambda u: u.id, message.mentions)):
         res = await AI.match(message.content, config, commands, message)
         if not res:
             if args and len(args) > 0:
