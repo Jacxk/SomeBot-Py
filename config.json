@@ -12,11 +12,26 @@
     "Leave me alone pls"
   ],
   "ai-res": [
-    ["@everyone", "HAH! You tried..."],
-    ["(give|gimme|send|gime|can.*have).*(meme).*", "run meme"],
-    ["say (.*)", "{0}"],
-    ["can (help me|help)", "run help"],
-    ["(u|you).*?(bad|suk|suck|suc)", "no u bad :cry:"]
+    [
+      "@everyone",
+      "HAH! You tried..."
+    ],
+    [
+      "(give|gimme|send|gime|can.*have).*(meme).*",
+      "$each$ | ok here's a meme | run meme"
+    ],
+    [
+      "say (.*)",
+      "{0}"
+    ],
+    [
+      "can (help me|help)",
+      "run help"
+    ],
+    [
+      "(u|you).*?(bad|suk|suck|suc)",
+      "$random$ | no u bad :cry: | wh... what...? | Im going to call the police"
+    ]
   ],
   "ai-res-not": [
     "I don't know how to do that",
