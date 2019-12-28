@@ -21,6 +21,7 @@ class Eval(Command):
         text = '\n  '.join(text)
 
         fun = {
+            'args': args,
             'message': message,
             'Embed': Embed
         }
