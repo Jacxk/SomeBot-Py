@@ -1,7 +1,7 @@
 import re
 from typing import List
 
-import dateparser
+import maya
 from discord import Client, Message, Embed, Color
 
 from interfaces.Command import Command
@@ -36,11 +36,13 @@ class Giveaway(Command):
         winners = 1 if 'winners' not in args else args[args.index('winners') + 1]
         desc = None if 'desc' not in args else args[args.index('desc') + 1]
 
-        ptime = dateparser.parse(time, settings={'PREFER_DATES_FROM': 'future'})
+        ptime = maya.when(time, prefer_dates_from='future')
 
-        embed = Embed(title=title.capitalize(), timestamp=ptime, color=Color.blurple())
+        embed = Embed(title=title.capitalize(), timestamp=ptime.datetime(), color=Color.blurple())
         embed.description = f"{desc if desc else ''}\n" \
                             f"Winners: {winners}\n" \
-                            f"Ends {time}"
+                            f"Ends {ptime.slang_time()}\n\n" \
+                            f"*React with 🎊 to enter*"
 
         msg = await message.channel.send(embed=embed)
+        await msg.add_reaction('🎊')

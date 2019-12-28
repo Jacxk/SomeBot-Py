@@ -9,7 +9,7 @@ verify_ssl = true
 discord-py = "*"
 requests = "*"
 pillow = "*"
-dateparser = "*"
+maya = "*"
 
 [requires]
 python_version = "3.8"
