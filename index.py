@@ -7,9 +7,9 @@ import traceback
 from pathlib import Path
 from random import randint
 
-from discord import ChannelType, Embed, AutoShardedClient, Game, Status, Message, Color
+from discord import ChannelType, Embed, AutoShardedClient, Game, Status, Message, Color, Member, File, DMChannel
 
-from utils import AI
+from utils import AI, verification
 from utils.utils import *
 
 config = None
@@ -47,6 +47,37 @@ async def on_ready():
 async def on_error(event):
     Logger.error(f"There was an error on {Colors.WARNING}{event}{Colors.ENDC} with the API")
     quit(1)
+
+
+@client.event
+async def on_member_join(member: Member):
+    verify = verification.generate_captcha()
+    message: Message = await member.send(file=File(verify[1], filename="captcha.jpg"))
+    channel: DMChannel = message.channel
+    tries = 0
+
+    async def wait_verify(tries):
+        if tries > config['max-tries']:
+            await member.kick(reason="Failed captcha too many times")
+            return
+        try:
+            def filter_check(m):
+                return m.channel == channel and not m.author.bot
+
+            msg = await client.wait_for('message', check=filter_check, timeout=60.0)
+
+            if msg.content == verify[0]:
+                await channel.send("You've been verified, you may now chat on the guild.")
+                # TODO: Remove unverified role.
+            else:
+                await channel.send("Wrong input, please try again")
+                await wait_verify(tries)
+                tries += 1
+                return
+        except TimeoutError:
+            pass
+
+    await wait_verify(tries)
 
 
 @atexit.register
